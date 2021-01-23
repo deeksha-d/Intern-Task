@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>	
+		<meta charset="UTF-8">
+		<title>form</title>
+		<!--link rel="stylesheet" href="styles.css"-->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+		<style type="text/css">
+		.form-style-8{
+		font-family: 'Open Sans Condensed', arial, sans;
+		width: 500px;
+		padding: 30px;
+		background: #FFFFFF;
+		
+		margin: 50px auto;
+		
+		box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+		
+		-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+		
+		-webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+
+
+}
+
+		
+		.form-style-8 h2{
+		
+			background: #4D4D4D;
+			
+			text-transform: uppercase;
+			
+			font-family: 'Open Sans Condensed', sans-serif;
+			
+			color: #797979;
+			
+			font-size: 18px;
+			
+			font-weight: 100;
+			
+			padding: 20px;
+			
+			margin: -30px -30px 30px -30px;
+		}
+
+		
+		.form-style-8 input[type="text"],
+		.form-style-8 input[type="date"],
+		.form-style-8 input[type="datetime"],
+		.form-style-8 input[type="email"],
+		.form-style-8 input[type="number"],
+		.form-style-8 input[type="search"],
+		.form-style-8 input[type="time"],
+		.form-style-8 input[type="url"],
+		.form-style-8 input[type="password"],
+		.form-style-8 textarea,
+		.form-style-8 select 
+		{
+		
+			box-sizing: border-box;
+			
+			-webkit-box-sizing: border-box;
+			
+			-moz-box-sizing: border-box;
+			
+			outline: none;
+			
+			display: block;
+			
+			width: 100%;
+			
+			padding: 7px;
+			
+			border: none;
+			
+			border-bottom: 1px solid #ddd;
+			
+			background: transparent;
+			
+			margin-bottom: 10px;
+			
+			font: 16px Arial, Helvetica, sans-serif;
+			
+			height: 45px;
+		}
+		.form-style-8 textarea{
+			
+			resize:none;
+			
+			overflow: hidden;
+		}
+		.form-style-8 input[type="submit"], 
+		.form-style-8 button{
+			
+			-moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+			
+			-webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+			
+			box-shadow: inset 0px 1px 0px 0px #45D6D6;
+			
+			background-color: #2CBBBB;
+			
+			border: 1px solid #27A0A0;
+			
+			display: inline-block;
+			
+			cursor: pointer;
+			
+			color: #FFFFFF;
+			
+			font-family: 'Open Sans Condensed', sans-serif;
+			
+			font-size: 14px;
+			
+			padding: 8px 18px;
+			
+			text-decoration: none;
+			
+			text-transform: uppercase;
+		}
+		.form-stye-8 input[type="submit"]:hover, 
+		.form-style-8 button:hover {
+			
+			background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+			
+			background-color:#34CACA;
+		}
+
+		</style>
+	</head>
+	<body>
+		<div class="form-style-8">
+		<h2>Registration Form</h2>
+		<form action="/userdata" method="POST">
+			<input type="text" placeholder="name" name="name" required="true">
+			<input type="number" min="0" step="1" oninput="validity.valid||(value='');" placeholder="age" name="age">
+			<!--input type="text" placeholder="age" name="age"-->
+			<input type="email" placeholder="email" name="email" required="true">
+			<input type="text" placeholder="interest" name="interest">
+			<!--input type="button" value="Submit"-->
+			<button>Submit</button>
+			
+		</form>
+		</div>
+		<div class="form-style-8">
+		<ul id="dis">
+
+			  <% if (userdata.length > 0) { %>
+			<span id="sho">Name: <%= userdata[userdata.length-1].name %></span>
+			&nbsp;&nbsp;
+			<span>Age: <%= userdata[userdata.length-1].age %></span>
+			&nbsp;&nbsp;
+			<span>Email: <%= userdata[userdata.length-1].email %></span>
+			&nbsp;&nbsp;
+			<span>Interest: <%= userdata[userdata.length-1].interest%></span>
+
+			  <% } %>
+		</ul>
+		</div>
+		
+		<div class="form-style-8">
+			<h2>Update User details</h2>
+		<form>		
+		<input type="text" placeholder="new name"  id="new_name" required="true">
+		<input type="number" min="0" step="1" oninput="validity.valid||(value='');" placeholder="new age" id="new_age">
+		<input type="email" placeholder="new email" name="email" id="new_email" required="true">
+		<input type="text" placeholder="new interest"  id="new_interest">
+		<button id="up-button" onclick="changeText(this)">Update</button>
+		</form>
+		</div>
+		<div class="form-style-8">
+			  <h2>Remove User Details</h2>
+			  <% if (userdata.length > 0) { %>
+			  <button id="delete-button" onclick="deleteText(this)">Delete</button>
+
+			  <% } %>
+		</div>
+		<div class="form-style-8">
+			<!--<form action="/pdf_dir" method="GET">-->
+			<button id="down_pdf" onclick="downPDF(this)">Download PDF</button>
+				<!--</form>-->
+			<!--a href="/pdf_dir" download="SampleDocument.pdf">Download</a-->
+		</div>
+		
+	<script>
+
+		function changeText(id) {
+			//id.innerHTML = "Ooops!"
+			var nname = document.getElementById("new_name").value;
+			var nage = document.getElementById("new_age").value;
+			var nemail = document.getElementById("new_email").value;
+			var nint = document.getElementById("new_interest").value;
+			fetch('/userdata', {
+					       method: 'put',
+					       headers: { 'Content-Type': 'application/json' },
+					       body: JSON.stringify({
+        name: nname,
+	age: nage,
+	email: nemail,
+	interest: nint})
+			 })
+		}
+	
+	function deleteText(id) {
+		console.log('Latest item is deleted')
+		
+		fetch('/userdata', {
+			  method: 'delete',
+			  headers: { 'Content-Type': 'application/json' },
+			  })
+	}
+
+
+	function downPDF(id) {
+		console.log('pdf to be downloaded')
+		fetch('/download', {
+			method: 'get',
+			headers: {'Content-Type':'application/pdf'}
+		})
+
+	}
+	</script>
+	</body>
+</html>
